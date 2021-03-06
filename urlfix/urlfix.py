@@ -19,23 +19,6 @@ class URLFix(object):
         matches = re.findall(format_pattern, self.input_file)
         self.input_format = matches[0] if len(matches) > 0 else ''
 
-    def __compare_file_content(self, tmp_file):
-        """
-        :param temp_file. temporary file name containing original file contents
-        :return  Compares the content of original file with temp file line by line and returns a bool value
-        True - If content is matched, False otherwise
-        """
-        content_matched = False
-        with open(self.input_file, "r") as f1, open(tmp_file, "r") as f2:
-            for content_orig, content_temp in zip(f1, f2):
-                if content_orig != content_temp:
-                    print(f"Content did not matched between {self.input_file} and {tmp_file}")
-                    print(content_orig, content_temp)
-                    break
-                else:
-                    content_matched = True
-        return content_matched
-
     def replace_urls(self, verbose=False, correct_urls=None, inplace=False):
         """
         :param verbose Logical. Should you be notified of what URLs have moved? Defaults to False.
@@ -60,7 +43,6 @@ class URLFix(object):
 
         number_moved = 0
         number_of_urls = 0
-        remove_orig_file = False
 
         if not self.output_file and not inplace:
             raise ValueError("Please provide an output file to write to.")
@@ -102,14 +84,12 @@ class URLFix(object):
                     out_f.write(line.replace(matched_url, url_used))
 
         if inplace:
-            remove_orig_file = self.__compare_file_content(output_file)
-            if remove_orig_file:
-                os.remove(self.input_file)
-                if verbose:
-                    print(f"{self.input_file} removed successfully")
-                os.rename(output_file, self.input_file)
-                if verbose:
-                    print(f"{output_file} renamed with {self.input_file} successfully")
+            os.remove(self.input_file)
+            if verbose:
+                print(f"{self.input_file} removed successfully")
+            os.rename(output_file, self.input_file)
+            if verbose:
+                print(f"{output_file} renamed with {self.input_file} successfully")
         information = "URLs have changed" if number_moved != 1 else "URL has changed"
         print(f"{number_moved} {information} of the {number_of_urls} links found in {self.input_file}")
         return number_moved
