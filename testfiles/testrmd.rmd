@@ -1,0 +1,30 @@
+---
+title: "urlfix meets RMarkdown"
+author: "Nelson Gonzabato"
+date: "4/21/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document that is used to test that `urlfix` can updated outdated links. Markdown is a simple formatting syntax for authoring HTML, PDF,
+and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+install.packages(c("mde", "manymolder"))
+```
+
+This is a [link](https://www.r-pkg.org/badges/version/manymodelr). We also have another link to [manymodelr](https://cran.r-project.org/package=manymodelr) and 
+the famous [tidyverse](https://tidyverse.org/lifecycle/#maturing). 
+
+That's it.Nothing fancy. 
+
+
+
+

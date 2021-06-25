@@ -21,12 +21,37 @@
 
 `urlfix` aims to find all outdated URLs in a given file and fix them. 
 
+
+**Features List**
+
+- [x] Commandline and programmer-friendly modes. 
+
+- [x] Replace outdated URLs/links in a single file
+
+- [x] Replace outdated URLs/links in a directory
+
+- [x] Replace outdated URLs/links in the same file or in the same files in a directory i.e. inplace.
+
+- [x] Replace outdated links in files in nested directories
+- [x] Replace outdated links in files in sub-nested directories 
+
 **Supported file formats**
 
 `urlfix` fixes URLs given a file of the following types:
 
 - [x] MarkDown (.md)
 - [x] Plain Text files (.txt)
+
+- [x] RMarkdown (.rmd)
+
+- [x] ReStructured Text (.rst)
+
+- [ ] PDF (.pdf)
+
+- [ ] Word (.docx)
+
+- [ ] ODF (.odf)
+
 
 
 **Installation**
@@ -66,9 +91,55 @@ python3 setup.py install
 
 **Sample usage**
 
+**Script Mode**
+
+To use at the commandline, please use:
+
+```shell
+
+python -m urlfix --mode "f" --verbose 1 --inplace 1 --inpath myfile.md
+
+```
+
+If not replacing within the same file, then:
+
+```shell
+
+python -m urlfix --mode "f" --verbose 1 --inplace 0 --inpath myfile.md --output-file myoutputfile.md
+
+```
+
+
+
+To get help:
+
+```shell
+python -m urlfix -h 
+
+#usage: main.py [-h] -m MODE -in INPUT_FILE [-o OUTPUT_FILE] -v {False,false,0,True,true,1} -i {False,false,0,True,true,1}
+#
+#optional arguments:
+#  -h, --help            show this help message and exit
+#  -m MODE, --mode MODE  Mode to use. One of f for file or d for directory
+#  -in INPUT_FILE, --input-file INPUT_FILE
+#                        Input file for which link updates are required.
+#  -o OUTPUT_FILE, --output-file OUTPUT_FILE
+#                        Output file to write to. Optional, only necessary if not replacing inplace
+#  -v {False,false,0,True,true,1}, --verbose {False,false,0,True,true,1}
+#                        String to control verbosity. Defaults to True.
+#  -i {False,false,0,True,true,1}, --inplace {False,false,0,True,true,1}
+#                        Should links be replaced inplace? This should be safe but to be sure, test with an output file first.
+
+
+
+```
+
+**Programmer-Friendly Mode**
+
 ```python
 
-from urlfix.urlfix import * 
+from urlfix.urlfix import URLFix
+from urlfix.dirurlfix import DirURLFix
 
 ```
 
@@ -76,7 +147,7 @@ from urlfix.urlfix import *
 
 ```python
 
-urlfix_object = URLFix("testurls.txt", output_file="replacement.txt")
+urlfix_object = URLFix("testfiles/testurls.txt", output_file="replacement.txt")
 
 ```
 **Replacing URLs**
@@ -93,26 +164,22 @@ damage their files.
 
 Since we set `verbose` to `True`, we get the following output:
 
-```shell
+```python
 urlfix_object.replace_urls()
-Found https://www.r-pkg.org/badges/version/manymodelr in testurls.txt, now validating.. 
-Found https://cran.r-project.org/package=manymodelr in testurls.txt, now validating.. 
-https://cran.r-project.org/package=manymodelr replaced with https://cran.r-project.org/web/packages/manymodelr/index.html 
-in replacement.txt
-Found https://tidyverse.org/lifecycle/#maturing in C:\Users\Nelg\Desktop\urlfix\testurls.txt, now validating.. 
-https://tidyverse.org/lifecycle/#maturing replaced with https://lifecycle.r-lib.org/articles/stages.html in 
-replacement.txt
-2 URLs have changed of the 3 links found in testurls.txt
-2
-
 ```
 
 To replace silently, simply set verbose to `False` (which is the default). 
 
 ```python
 urlfix_object.replace_urls()
-2 URLs have changed of the 3 links found in testurls.txt
-2
+```
+
+If there are URLs known to be valid, pass these to the `correct_urls` argument to save some time.
+
+```python 
+
+urlfix_object.replace_urls(correct_urls=[urls_here]) # Use a Sequence eg tuple, list, etc
+
 ```
 
 
@@ -136,6 +203,24 @@ replace_in_dir.replace_urls()
 
 ```
 
+**Recursively replacing links in nested directories**
+
+To replace outdated links in several files located in several directories, we set `recursive` to `True`.
+Currently, replacing links in directories nested within nested directories is not (yet) supported.
+
+```python
+
+recursive_object = DirURLFix("path_to_root_directory", recursive=True)
+
+```
+
+We can then proceed as above
+
+```python
+
+recursive_object.replace_urls() # provide other arguments as you may wish. 
+
+```
 ---
 
 To report any issues, suggestions or improvement, please do so at [issues](https://github.com/Nelson-Gon/urlfix/issues). 

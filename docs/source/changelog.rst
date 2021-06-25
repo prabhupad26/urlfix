@@ -2,8 +2,91 @@
 Welcome to urlfix's changelog
 =============================
 
+**urlfix 0.2.3**
+
+
+* ``URLFix`` now warns with HTTP error codes, wherever applicable. 
+
+**urlfix 0.2.2**
+
+
+* 
+  Script mode now supports updating links in sub-nested directories. 
+
+* 
+  ``DirURLFix`` now supports replacement of outdated links in sub-nested directories. 
+
+* 
+  Now supporting ReStructured text (\ ``.rst``\ ) files. 
+
+* 
+  Added support for RMarkdown (\ ``.rmd``\ ) files. 
+
+* 
+  A ``recursive`` argument was added to script mode. The argument ``input-file`` was renamed ``inpath`` to reflect that
+  this may be a file or directory. 
+
+* 
+  ``DirURLFix`` is now fully recursive. 
+
+* 
+  Extended tests to ensure that recursion works as expected. 
+
+
+* 
+  Refactored ``dirurlfix``\ 's main replacement method to allow for greater flexibility in recursive replacements. 
+
+* 
+  Fixed a bug due to differences in file orders between Linux and Windows. 
+
+* 
+  Initial support for recursive link updates. See `#24 <https://github.com/Nelson-Gon/urlfix/issues/24>`_.
+
 **urlfix 0.2.1**
 
+
+* 
+  Download URL is now automated, please release new versions as ``v-version-number-here``.
+
+* 
+  Script mode has been added as a ``__main__.py`` module. You can now therefore call ``urlfix`` at the command line/Terminal 
+  via ``python -m urlfix``.
+
+* 
+  A script mode has been added to enable commandline replacement of outdated links. See
+  `#22 <https://github.com/Nelson-Gon/urlfix/issues/22>`_. 
+
+* 
+  Fixed issues with links not being replaced following changes to directory replacement. 
+
+* 
+  Restored inplace replacement. Using temporary files for now. See 
+  `#15 <https://github.com/Nelson-Gon/urlfix/pull/15>`_ and `#10 <https://github.com/Nelson-Gon/urlfix/issues/10>`_.
+
+* 
+  Versioning is now automated. You can now check version number via ``urlfix.__version__``
+
+* 
+  ``dirurlfix`` is a new module dedicate to directory replacements. 
+
+* 
+  Fixed issues with markdown links in the format ``[]()[]()`` not being fully matched. 
+  See `#17 <https://github.com/Nelson-Gon/urlfix/issues/17>`_
+
+* 
+  Fixed issues with double text appearing in the replacement file. 
+  Related to `Issue 20 <https://github.com/Nelson-Gon/urlfix/issues/20>`_. 
+
+* 
+  Fixed issues with URLs not being matched if they are on the same line. 
+  Issue `#20 <https://github.com/Nelson-Gon/urlfix/issues/20>`_. 
+
+* 
+  Users are now warned if a target URL is outdated and no newer URL exists. 
+  See `#18 <https://github.com/Nelson-Gon/urlfix/issues/18>`_
+
+* 
+  Fixed issues with text loss in output markdown files. See `#16 <https://github.com/Nelson-Gon/urlfix/issues/16>`_ 
 
 * 
   Fixed issues with tests failing when run `consecutively <https://github.com/Nelson-Gon/urlfix/pull/13>`_ 
